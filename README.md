@@ -19,7 +19,7 @@ your laptop.
 - **Metadata-filtered retrieval** — filter by state, region, city, or document type from the
   Streamlit sidebar.
 - **Fully local stack** — `sentence-transformers` for embeddings, `chromadb` for vector
-  storage, `ollama` (`llama3.2:1b`) for generation.
+  storage, `ollama` (`llama3.2:3b`) for generation.
 - **Evaluation harness** — a CSV of factual / transit / out-of-scope test questions with an
   automated pass/fail keyword check.
 
@@ -64,7 +64,7 @@ Place these five PDFs in `data/raw/` before running ingestion. Source-to-metadat
                          │ system + user prompt
                          ▼
                 ┌──────────────────┐
-                │  rag_engine.py   │──▶ Ollama /api/chat (llama3.2:1b)
+                │  rag_engine.py   │──▶ Ollama /api/chat (llama3.2:3b)
                 └──────────────────┘
                          │
                          ▼
