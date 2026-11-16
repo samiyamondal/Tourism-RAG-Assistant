@@ -1,0 +1,16 @@
+question,category,expected_keyword
+What is the entry fee for Victoria Memorial in Kolkata?,factual,20
+How do I reach Darjeeling from New Jalpaiguri?,transit,Toy Train
+What is the highest trekking point in West Bengal?,factual,Sandakphu
+Which UNESCO World Heritage Sites are located in West Bengal?,factual,Sundarbans
+What are the top dishes to try in Kolkata?,factual,Mishti Doi
+Which Shakti Peethas are located in Birbhum district?,factual,Bakreswar
+What is the best time of year to visit Darjeeling?,seasonal,April
+How is Kolkata connected by air and rail?,transit,Netaji Subhas
+What is the Pathasathi initiative undertaken by the West Bengal Tourism Department?,factual,highways
+Can you help me book a flight to Kolkata right now?,out_of_scope,cannot
+What is the current weather forecast for Darjeeling this week?,out_of_scope,cannot
+Can you write me a Python script to sort a list?,out_of_scope,cannot
+What visa do I need as a US citizen to visit India?,out_of_scope,cannot
+What districts make up the Darjeeling Himalayan Terai region?,factual,Kalimpong
+Tell me about the Ganga Sagar Mela festival.,factual,pilgrims

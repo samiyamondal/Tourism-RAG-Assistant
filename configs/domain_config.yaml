@@ -1,0 +1,430 @@
+# =============================================================================
+# Domain configuration for the Tourism RAG Assistant
+# Defines the scope of the knowledge base, source-to-region/state mapping,
+# answer policy, and safety/out-of-scope boundaries. Loaded at runtime by
+# src/common/config_loader.py and consumed by the prompt builder + retriever.
+# =============================================================================
+
+app:
+  name: "Tourism RAG Assistant"
+  version: "1.0.0"
+  description: >
+    An authentic, citation-grounded travel intelligence assistant for tourists
+    exploring India, covering all Indian states and union territories.
+
+# -----------------------------------------------------------------------------
+# Knowledge base sources. Each entry maps a raw filename to metadata used for
+# citation, filtering, and chunk tagging during ingestion.
+# -----------------------------------------------------------------------------
+sources:
+  - file: "Kolkata_Travel_Guide.pdf"
+    doc_id: "kolkata_travel_guide"
+    title: "Kolkata Travel Guide"
+    state: "West Bengal"
+    region: "Gangetic Delta"
+    city: "Kolkata"
+    doc_type: "city_guide"
+
+  - file: "Darjeeling_pocket.pdf"
+    doc_id: "darjeeling_pocket_guide"
+    title: "Darjeeling (Milestones Pocket Guide)"
+    state: "West Bengal"
+    region: "Darjeeling Himalayan Terai Region"
+    city: "Darjeeling"
+    doc_type: "city_guide"
+
+  - file: "Harnessing_the_Tourism_Potential_of_Bengal.pdf"
+    doc_id: "wb_tourism_potential"
+    title: "Heritage to Horizons: Harnessing the Tourism Potential of Bengal"
+    state: "West Bengal"
+    region: "Statewide"
+    city: null
+    doc_type: "government_policy_report"
+
+  - file: "Rajasthan-Through-Districts.pdf"
+    doc_id: "rajasthan_districts"
+    title: "Rajasthan Through Districts"
+    state: "Rajasthan"
+    region: "Statewide"
+    city: null
+    doc_type: "district_guide"
+
+  - file: "UP-Book-opt.pdf"
+    doc_id: "up_book"
+    title: "Uttar Pradesh Tourism Book"
+    state: "Uttar Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Uttar_Pradesh_Food_Supplement.pdf"
+    doc_id: "up_food_supplement"
+    title: "Uttar Pradesh Food Supplement"
+    state: "Uttar Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Kerala_Tourism_Guide.pdf"
+    doc_id: "kerala_tourism_guide"
+    title: "Kerala Tourism Guide"
+    state: "Kerala"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Goa_Tourism_Guide.pdf"
+    doc_id: "goa_tourism_guide"
+    title: "Goa Tourism Guide"
+    state: "Goa"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Karnataka_Tourism_Guide.pdf"
+    doc_id: "karnataka_tourism_guide"
+    title: "Karnataka Tourism Guide"
+    state: "Karnataka"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Tamil_Nadu_Tourism_Guide.pdf"
+    doc_id: "tamil_nadu_tourism_guide"
+    title: "Tamil Nadu Tourism Guide"
+    state: "Tamil Nadu"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "Himachal_Pradesh_Tourism_Guide.pdf"
+    doc_id: "himachal_pradesh_tourism_guide"
+    title: "Himachal Pradesh Tourism Guide"
+    state: "Himachal Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+  - file: "India_Tourism_FAQ.pdf"
+    doc_id: "india_tourism_faq"
+    title: "India Tourism FAQ"
+    state: "All-India"
+    region: "Statewide"
+    city: null
+    doc_type: "faq"
+
+  - file: "India_Overview_Guide.pdf"
+    doc_id: "india_overview_guide"
+    title: "India Overview Guide"
+    state: "All-India"
+    region: "Statewide"
+    city: null
+    doc_type: "overview_guide"
+
+  - file: "Maharashtra_Tourism_Guide.pdf"
+    doc_id: "maharashtra_tourism_guide"
+    title: "Maharashtra Tourism Guide"
+    state: "Maharashtra"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Gujarat_Tourism_Guide.pdf"
+    doc_id: "gujarat_tourism_guide"
+    title: "Gujarat Tourism Guide"
+    state: "Gujarat"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Madhya_Pradesh_Tourism_Guide.pdf"
+    doc_id: "madhya_pradesh_tourism_guide"
+    title: "Madhya Pradesh Tourism Guide"
+    state: "Madhya Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Punjab_Tourism_Guide.pdf"
+    doc_id: "punjab_tourism_guide"
+    title: "Punjab Tourism Guide"
+    state: "Punjab"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Uttarakhand_Tourism_Guide.pdf"
+    doc_id: "uttarakhand_tourism_guide"
+    title: "Uttarakhand Tourism Guide"
+    state: "Uttarakhand"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Sikkim_Tourism_Guide.pdf"
+    doc_id: "sikkim_tourism_guide"
+    title: "Sikkim Tourism Guide"
+    state: "Sikkim"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Assam_Tourism_Guide.pdf"
+    doc_id: "assam_tourism_guide"
+    title: "Assam Tourism Guide"
+    state: "Assam"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Odisha_Tourism_Guide.pdf"
+    doc_id: "odisha_tourism_guide"
+    title: "Odisha Tourism Guide"
+    state: "Odisha"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Bihar_Tourism_Guide.pdf"
+    doc_id: "bihar_tourism_guide"
+    title: "Bihar Tourism Guide"
+    state: "Bihar"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Jharkhand_Tourism_Guide.pdf"
+    doc_id: "jharkhand_tourism_guide"
+    title: "Jharkhand Tourism Guide"
+    state: "Jharkhand"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Chhattisgarh_Tourism_Guide.pdf"
+    doc_id: "chhattisgarh_tourism_guide"
+    title: "Chhattisgarh Tourism Guide"
+    state: "Chhattisgarh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Telangana_Tourism_Guide.pdf"
+    doc_id: "telangana_tourism_guide"
+    title: "Telangana Tourism Guide"
+    state: "Telangana"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Andhra_Pradesh_Tourism_Guide.pdf"
+    doc_id: "andhra_pradesh_tourism_guide"
+    title: "Andhra Pradesh Tourism Guide"
+    state: "Andhra Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Manipur_Tourism_Guide.pdf"
+    doc_id: "manipur_tourism_guide"
+    title: "Manipur Tourism Guide"
+    state: "Manipur"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Meghalaya_Tourism_Guide.pdf"
+    doc_id: "meghalaya_tourism_guide"
+    title: "Meghalaya Tourism Guide"
+    state: "Meghalaya"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Nagaland_Tourism_Guide.pdf"
+    doc_id: "nagaland_tourism_guide"
+    title: "Nagaland Tourism Guide"
+    state: "Nagaland"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Mizoram_Tourism_Guide.pdf"
+    doc_id: "mizoram_tourism_guide"
+    title: "Mizoram Tourism Guide"
+    state: "Mizoram"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Tripura_Tourism_Guide.pdf"
+    doc_id: "tripura_tourism_guide"
+    title: "Tripura Tourism Guide"
+    state: "Tripura"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Arunachal_Pradesh_Tourism_Guide.pdf"
+    doc_id: "arunachal_pradesh_tourism_guide"
+    title: "Arunachal Pradesh Tourism Guide"
+    state: "Arunachal Pradesh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Delhi_Tourism_Guide.pdf"
+    doc_id: "delhi_tourism_guide"
+    title: "Delhi Tourism Guide"
+    state: "Delhi"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Jammu_and_Kashmir_Tourism_Guide.pdf"
+    doc_id: "jammu_and_kashmir_tourism_guide"
+    title: "Jammu and Kashmir Tourism Guide"
+    state: "Jammu and Kashmir"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Ladakh_Tourism_Guide.pdf"
+    doc_id: "ladakh_tourism_guide"
+    title: "Ladakh Tourism Guide"
+    state: "Ladakh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Puducherry_Tourism_Guide.pdf"
+    doc_id: "puducherry_tourism_guide"
+    title: "Puducherry Tourism Guide"
+    state: "Puducherry"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Andaman_and_Nicobar_Islands_Tourism_Guide.pdf"
+    doc_id: "andaman_and_nicobar_islands_tourism_guide"
+    title: "Andaman and Nicobar Islands Tourism Guide"
+    state: "Andaman and Nicobar Islands"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Lakshadweep_Tourism_Guide.pdf"
+    doc_id: "lakshadweep_tourism_guide"
+    title: "Lakshadweep Tourism Guide"
+    state: "Lakshadweep"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Chandigarh_Tourism_Guide.pdf"
+    doc_id: "chandigarh_tourism_guide"
+    title: "Chandigarh Tourism Guide"
+    state: "Chandigarh"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+  - file: "Dadra_and_Nagar_Haveli_and_Daman_and_Diu_Tourism_Guide.pdf"
+    doc_id: "dadra_and_nagar_haveli_and_daman_and_diu_tourism_guide"
+    title: "Dadra and Nagar Haveli and Daman and Diu Tourism Guide"
+    state: "Dadra and Nagar Haveli and Daman and Diu"
+    region: "Statewide"
+    city: null
+    doc_type: "state_guide"
+
+# -----------------------------------------------------------------------------
+# Chunking behaviour
+# -----------------------------------------------------------------------------
+chunking:
+  strategy: "section_aware"
+  target_tokens: 350
+  overlap_tokens: 60
+  # Headings used to detect section boundaries within a page while chunking.
+  section_heading_hints:
+    - "Places to Visit"
+    - "Places of Interest"
+    - "How to reach"
+    - "Getting to"
+    - "When to visit"
+    - "Food of"
+    - "Local Food"
+    - "Shopping"
+    - "Accommodation"
+    - "Transportation"
+    - "Climate"
+    - "Trekking"
+    - "Temples"
+    - "Religious Circuits"
+    - "Initiatives"
+
+# -----------------------------------------------------------------------------
+# Retrieval behaviour
+# -----------------------------------------------------------------------------
+retrieval:
+  top_k: 6
+  score_threshold: 0.25
+  # Metadata fields tourists / the UI can filter on.
+  filterable_fields:
+    - state
+    - region
+    - city
+    - doc_type
+
+# -----------------------------------------------------------------------------
+# Answer policy — enforced by the prompt builder. This is the contract the
+# LLM must follow when generating an answer from retrieved context.
+# -----------------------------------------------------------------------------
+answer_policy:
+  persona: >
+    You are a knowledgeable, precise local travel assistant for India. You
+    speak like a well-informed guide, not a generic chatbot.
+  grounding_rules:
+    - "Answer ONLY using facts present in the provided context chunks."
+    - "Every factual claim must be traceable to at least one retrieved chunk."
+    - "Do not use outside/general knowledge to fill gaps in the context."
+    - "If the context does not contain the answer, say so explicitly and do not guess."
+    - "Prefer specific, concrete details (fees, distances, timings, names) over vague summaries."
+    - "When sources disagree or information may be dated, note that plainly."
+  citation_rules:
+    - "After each answer, list the source documents used (title + page/section if available)."
+    - "Do not fabricate page numbers or sources not present in the retrieved context."
+  refusal_rules:
+    - "If the question is unrelated to travel/tourism in the covered states, politely decline and redirect."
+    - "If the question asks for information the knowledge base does not cover (e.g. live prices, real-time weather, visa rules), state that this assistant only has static guidebook/report data and cannot provide live information."
+  tone:
+    - "Warm, direct, and practical — like a well-traveled friend, not a brochure."
+    - "Answer ONLY what was asked. Do not add extra facts, background, or related tips the user did not ask for."
+    - "No filler, no preamble, no 'Here is the answer' — start directly with the answer content."
+    - "1-3 sentences for simple factual questions (fees, timings, distances, single facts). Only go longer if the question itself asks for a list or detailed explanation."
+
+# -----------------------------------------------------------------------------
+# Out-of-scope / safety boundaries
+# -----------------------------------------------------------------------------
+safety:
+  out_of_scope_topics:
+    - "medical or health advice"
+    - "visa, passport, or immigration procedures"
+    - "real-time prices, live weather, or current political situations"
+    - "booking or payment processing"
+    - "topics unrelated to Indian tourism (coding help, general trivia, etc.)"
+  out_of_scope_response: >
+    I'm a travel assistant focused on Indian tourism, based on the
+    guidebooks, government reports, and FAQs in my knowledge base covering
+    all Indian states and union territories. I can't help with that — but
+    I'm happy to help you plan your trip, suggest places to visit, explain
+    local food, festivals, or transport!
+  covered_states:
+    - "West Bengal"
+    - "Rajasthan"
+    - "Uttar Pradesh"
+    - "Kerala"
+    - "Goa"
+    - "Karnataka"
+    - "Tamil Nadu"
+    - "Himachal Pradesh"
+    - "Maharashtra"
+    - "Gujarat"
+    - "Madhya Pradesh"
+    - "Punjab"
+    - "Uttarakhand"
+    - "Sikkim"
+    - "Assam"
+    - "Odisha"
+    - "Bihar"
+    - "Jharkhand"
+    - "Chhattisgarh"
+    - "Telangana"
+    - "Andhra Pradesh"
+    - "Manipur"
+    - "Meghalaya"
+    - "Nagaland"
+    - "Mizoram"
+    - "Tripura"
+    - "Arunachal Pradesh"
+    - "Delhi"
+    - "Jammu and Kashmir"
+    - "Ladakh"
+    - "Puducherry"
+    - "Andaman and Nicobar Islands"
+    - "Lakshadweep"
+    - "Chandigarh"
+    - "Dadra and Nagar Haveli and Daman and Diu"
